@@ -61,6 +61,7 @@ def niktoScan(target, file):
     for line in nk.stdout.decode('UTF-8').split("\n"):
         file.write(line+"\n")
     print("Nikto scan complete.\n")
+    file.write("*"*20+"\n\n")
 
 def dirbScan(target, file):
     print("Starting Dirb scan...")
