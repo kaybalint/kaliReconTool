@@ -13,13 +13,10 @@ def main():
 
     print(f'Testing {target}...')
     if re.match(r'[a-zA-Z]*://[\w.]*', target):
-        hostname = target.split("//")[1]
-        if hostname[-1]=="/":
-            hostname=hostname[:-1]
-        filename = "Scan_Results_" + hostname.replace('.','_').replace('/','_')
-        print(filename)
+        x = target.split("//")[1]
+        filename = "Scan_Results_" + x.replace('.','_').replace('/','_')
     else:
-        filename = "Scan_Results_" + target
+        filename = "Scan_Results_" + target.replace('.','_').replace('/','_')
     results = open(filename, 'w')
     results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     results.write("*"*20+"\n")
