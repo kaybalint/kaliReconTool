@@ -19,7 +19,7 @@ def main():
         filename = "Scan_Results_" + target.replace('.','_').replace('/','_')
     results = open(filename, 'w')
     results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-    results.write("*"*20+"\n")
+    results.write("*"*20+"\n\n")
     nmapScan(target, results)
     niktoScan(target, results)
     results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
@@ -46,14 +46,15 @@ def nmapScan(target, file):
                            file.write(f"{data.capitalize()}: {x}\t")
                        else:
                            file.write(f"{data.capitalize()}: N/A\t")
-                   file.write("\n")
-    file.write("*"*20+"\n")
+                   file.write("\n\n")
+    file.write("*"*20+"\n\n")
 
 def niktoScan(target, file):
     print("Starting nikto scan...")
+    file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
-    for line in str(nk.stdout).split("\n"):
-        file.write(line)
+    for line in nk.stdout.decode('UTF-8').split("\n"):
+        file.write(line+"\n")
     print("Nikto scan complete.\n")
 
 if __name__ == "__main__":
