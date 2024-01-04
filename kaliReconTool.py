@@ -50,6 +50,7 @@ def nmapScan(target, file):
     file.write("*"*20+"\n")
 
 def niktoScan(target, file):
+    print("Starting nikto scan...")
     print(subprocess.check_output(['nikto', '-host', target]))
 
 if __name__ == "__main__":
