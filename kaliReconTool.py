@@ -24,7 +24,7 @@ def main():
     results.write("*"*20+"\n\n")
     nmap = nmapScan(target)
     addToFile("NMAP SCAN", results, nmap)
-    results.write("Scan complete.\nEnd Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    results.write(f"Scan complete.\nEnd Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     results.close()
     print(f"Results are located in {filename}.")
 
