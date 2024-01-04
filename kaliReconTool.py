@@ -22,7 +22,7 @@ def main():
     results.write(f"Target: {target}\n")
     results.write("*"*20+"\n")
     nmap = nmapScan(target)
-    addToFile("Nmap scan", results, nmap)
+    addToFile("NMAP SCAN", results, nmap)
     results.close()
     print(f"Results are located in {filename}.")
 
@@ -35,8 +35,8 @@ def nmapScan(target):
     
 def addToFile(scan, file, results):
     file.write(scan+"\n")
-    file.write(results)
-    file.write("*"*20)
+    file.write(results+"\n")
+    file.write("*"*20+"\n")
 
 if __name__ == "__main__":
     main()
