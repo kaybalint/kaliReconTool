@@ -30,22 +30,19 @@ def main():
 
 def nmapScan(target, file):
     print("Starting Nmap scan...")
-    file.write("NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
+    file.write(f"NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
     nm = nmap.PortScanner()
     nm.scan(hosts = target, arguments = "-p- -A")
     print("Nmap scan complete.")
-    file.write("End Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+    file.write(f"End Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     for host in nm.all_hosts():
         file.write(f"Host: {host} ({nm[host].hostname()})\n")
         file.write(f"State: {nm[host].state()}\n----------n")
         for protocol in nm[host].all_protocols():
                file.write(f"Protocol: {protocol}\n")
                for port in nm[host][protocol].keys():
-                   print(f"Port: {port}\tState: {nm[host][protocol][port]['state']}\tProduct: {nm[host][protocol][port]['product']}\t")
-               
-    for line in data.split("\n"):
-        nmapData+=line.replace(";","  |  ")+"\n"
-    return nmapData
+                   file.write(f"Port: {port}\tName: {nm[host][protocol][port]['name']}\tState: {nm[host][protocol][port]['state']}\tProduct: {nm[host][protocol][port]['product']}\tExtra Info: {nm[host][protocol][port]['extrainfo']}\tReason: {nm[host][protocol][port]['reason']}\tVersion: {nm[host][protocol][port]['version']}")
+
     
 def addToFile(scan, file, results):
     file.write(scan+"\n\n")
