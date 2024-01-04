@@ -51,7 +51,9 @@ def nmapScan(target, file):
 
 def niktoScan(target, file):
     print("Starting nikto scan...")
-    print(subprocess.run(["nikto", "-h", target], capture_output=True))
+    nk = subprocess.run(["nikto", "-h", target], capture_output=True))
+    for line in str(nk.stdout).split("\n")
+        file.write(line)
     print("Nikto scan complete.\n")
 
 if __name__ == "__main__":
