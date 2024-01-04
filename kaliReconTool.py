@@ -48,8 +48,7 @@ def nmapScan(target, file):
                            file.write(f"{data.capitalize()}: {x}\t")
                        else:
                            file.write(f"{data.capitalize()}: N/A\t")
-                       file.write("\n")
-                        #Name: {nm[host][protocol][port]['name']}\tState: {nm[host][protocol][port]['state']}\tProduct: {nm[host][protocol][port]['product']}\tExtra Info: {nm[host][protocol][port]['extrainfo']}\tReason: {nm[host][protocol][port]['reason']}\tVersion: {nm[host][protocol][port]['version']}\n")
+                    file.write("\n")
     file.write("*"*20+"\n")
     
 def addToFile(scan, file, results):
