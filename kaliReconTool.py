@@ -12,7 +12,7 @@ def main():
     print(f'Testing {target}...')
     if re.match(r'[a-zA-Z]*://[\w.]*', target):
         hostname = target.split("//")[1]
-        if hostname[-1]:
+        if hostname[-1]=="/":
             hostname=hostname[:-1]
         filename = "Scan_Results_" + hostname.replace('.','_')
         print(filename)
