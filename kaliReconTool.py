@@ -50,12 +50,21 @@ def nmapScan(target, file):
     file.write("*"*20+"\n\n")
 
 def niktoScan(target, file):
-    print("Starting nikto scan...")
+    print("Starting Nikto scan...")
     file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
     for line in nk.stdout.decode('UTF-8').split("\n"):
         file.write(line+"\n")
     print("Nikto scan complete.\n")
+
+def dirbScan(target, file):
+    print("Starting Dirb scan...")
+    file.write("DIRB SCAN\n")
+    nk = subprocess.run(["dirb", "", target], capture_output=True)
+    for line in nk.stdout.decode('UTF-8').split("\n"):
+        file.write(line+"\n")
+    print("Dirb scan complete.\n")
+
 
 if __name__ == "__main__":
     main()
