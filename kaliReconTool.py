@@ -41,7 +41,7 @@ def nmapScan(target, file):
         for protocol in nm[host].all_protocols():
                file.write(f"Protocol: {protocol}\n")
                for port in nm[host][protocol].keys():
-                   print(f"Port: {port}\tState: {nm[host][portocol][port]['state']}\tProduct: {nm[host][portocol][port]['product']}\t")
+                   print(f"Port: {port}\tState: {nm[host][protocol][port]['state']}\tProduct: {nm[host][protocol][port]['product']}\t")
                
     for line in data.split("\n"):
         nmapData+=line.replace(";","  |  ")+"\n"
