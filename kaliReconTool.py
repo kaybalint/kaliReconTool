@@ -1,7 +1,14 @@
 import sys
+import re
+import nmap
 
 if len(sys.argv) == 1:
-    ip = input('Enter IP address: ')
-    print(f'Testing {ip}...')
+    target = input('Enter target IP or URL: ')
+    print(f'Testing {target}...')
 elif len(sys.argv) == 2:
-    print(f'Testing {sys.argv[0]}...')
+    if sys.argv
+    print(f'Testing {sys.argv[1]}...')
+
+nm = nmap.PortScanner()
+nm.scan(host = target, arguments = "-p- -A")
+print(nm.csv())
