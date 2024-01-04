@@ -16,7 +16,7 @@ def main():
         hostname = target.split("//")[1]
         if hostname[-1]=="/":
             hostname=hostname[:-1]
-        filename = "Scan_Results_" + hostname.replace('.','_')
+        filename = "Scan_Results_" + hostname.replace('.','_').replace('/','_')
         print(filename)
     else:
         filename = "Scan_Results_" + target
