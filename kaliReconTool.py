@@ -42,7 +42,7 @@ def nmapScan(target, file):
                file.write(f"Protocol: {protocol}\n")
                for port in nm[host][protocol].keys():
                    file.write(f"Port: {port}\t")
-                   for data in nm[host][protocol][host].keys():
+                   for data in nm[host][protocol][port].keys():
                        x = nm[host][protocol][port][data]
                        if x:
                            file.write(f"{data}: {x}\t")
