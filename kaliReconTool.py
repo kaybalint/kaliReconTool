@@ -7,10 +7,15 @@ import subprocess
 
 def main():
     if len(sys.argv) == 1:
-        target = input('Enter target IP or URL: ')
+        target = input('Enter target IP or URL: ')           
     elif len(sys.argv) == 2:
         target = sys.argv[1]
-
+    invalid = True
+    while invalid:
+        if not (re.match(r'[a-zA-Z]*://[\w.]*', target) or re.match(r'[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}', target)):
+            target = input('Enter valid IP or URL: ')
+        else:
+            invalid = False
     print(f'Testing {target}...\n')
     if re.match(r'[a-zA-Z]*://[\w.]*', target):
         x = target.split("//")[1]
