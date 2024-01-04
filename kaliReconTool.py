@@ -39,7 +39,7 @@ def nmapScan(target):
     
 def addToFile(scan, file, results):
     file.write(scan+"\n\n")
-    file.write(results+)
+    file.write(results)
     file.write("*"*20+"\n")
 
 if __name__ == "__main__":
