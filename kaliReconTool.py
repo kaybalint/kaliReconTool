@@ -11,7 +11,7 @@ def main():
     elif len(sys.argv) == 2:
         target = sys.argv[1]
 
-    print(f'Testing {target}...')
+    print(f'Testing {target}...\n')
     if re.match(r'[a-zA-Z]*://[\w.]*', target):
         x = target.split("//")[1]
         filename = "Scan_Results_" + x.replace('.','_').replace('/','_')
@@ -31,7 +31,7 @@ def nmapScan(target, file):
     file.write(f"NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
     nm = nmap.PortScanner()
     nm.scan(hosts = target, arguments = "-p- -A")
-    print("Nmap scan complete.")
+    print("Nmap scan complete.\n")
     file.write(f"End Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     for host in nm.all_hosts():
         file.write(f"Host: {host} ({nm[host].hostname()})\n")
@@ -51,7 +51,8 @@ def nmapScan(target, file):
 
 def niktoScan(target, file):
     print("Starting nikto scan...")
-    print(subprocess.check_output(['nikto', '-host', target]))
+    print(subprocess.run(["nikto", "-h", target], capture_output=True))
+    print("Nikto scan complete.\n")
 
 if __name__ == "__main__":
     main()
