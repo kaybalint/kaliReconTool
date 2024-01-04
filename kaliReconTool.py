@@ -3,6 +3,7 @@ import re
 import nmap
 from datetime import datetime
 import pytz
+import subprocess
 
 def main():
     if len(sys.argv) == 1:
