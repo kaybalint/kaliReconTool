@@ -41,8 +41,15 @@ def nmapScan(target, file):
         for protocol in nm[host].all_protocols():
                file.write(f"Protocol: {protocol}\n")
                for port in nm[host][protocol].keys():
-                   file.write(f"Port: {port}\tName: {nm[host][protocol][port]['name']}\tState: {nm[host][protocol][port]['state']}\tProduct: {nm[host][protocol][port]['product']}\tExtra Info: {nm[host][protocol][port]['extrainfo']}\tReason: {nm[host][protocol][port]['reason']}\tVersion: {nm[host][protocol][port]['version']}\n")
-
+                   file.write(f"Port: {port}\t")
+                    for data in nm[host][protocol][host].keys():
+                        x = nm[host][protocol][port][data]
+                        if x:
+                            file.write(f"{data}: {x}\t")
+                        else:
+                            file.write(f"{data}: N/A\t")
+                        #Name: {nm[host][protocol][port]['name']}\tState: {nm[host][protocol][port]['state']}\tProduct: {nm[host][protocol][port]['product']}\tExtra Info: {nm[host][protocol][port]['extrainfo']}\tReason: {nm[host][protocol][port]['reason']}\tVersion: {nm[host][protocol][port]['version']}\n")
+    file.write("*"*20+"\n")
     
 def addToFile(scan, file, results):
     file.write(scan+"\n\n")
