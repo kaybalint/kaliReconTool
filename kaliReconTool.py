@@ -7,7 +7,6 @@ import pytz
 def main():
     if len(sys.argv) == 1:
         target = input('Enter target IP or URL: ')
-        
     elif len(sys.argv) == 2:
         target = sys.argv[1]
 
@@ -20,7 +19,8 @@ def main():
     results = open(filename, 'w')
     results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     results.write("*"*20+"\n")
-    nmap = nmapScan(target, results)
+    nmapScan(target, results)
+    niktoScan(target, results)
     results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     results.close()
     print(f"Results are located in {filename}.")
@@ -47,11 +47,9 @@ def nmapScan(target, file):
                            file.write(f"{data.capitalize()}: N/A\t")
                    file.write("\n")
     file.write("*"*20+"\n")
-    
-def addToFile(scan, file, results):
-    file.write(scan+"\n\n")
-    file.write(results)
-    file.write("*"*20+"\n")
+
+def niktoScan(target, file):
+    print(subprocess.check_output(['nikto', '-host', target]))
 
 if __name__ == "__main__":
     main()
