@@ -10,7 +10,14 @@ def main():
         target = sys.argv[1]
 
     print(f'Testing {target}...')
-    filename = "Scan_Results_" + target
+    if re.match(r'[a-zA-Z]*://[\w.]*', target):
+        hostname = target.split("//")[1]
+        if hostname[-1]:
+            hostname=hostname[:-1]
+        filename = "Scan_Results_" + hostname.replace('.','_')
+        print(filename)
+    else:
+        filename = "Scan_Results_" + target
     results = open(filename, 'w')
     results.write(f"Target: {target}\n")
     results.write("*"*20+"\n")
