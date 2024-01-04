@@ -20,7 +20,7 @@ def main():
         filename = "Scan_Results_" + target
     results = open(filename, 'w')
     results.write(f"Target: {target}\n\n")
-    results.write("*"*20+"\n")
+    results.write("*"*20+"\n\n")
     nmap = nmapScan(target)
     addToFile("NMAP SCAN", results, nmap)
     results.close()
@@ -29,7 +29,7 @@ def main():
 def nmapScan(target):
     print("Starting Nmap scan...")
     nm = nmap.PortScanner()
-    nm.scan(hosts = target, arguments = "-p- -A")
+    nm.scan(hosts = target, arguments = "-p-")
     print("Nmap scan complete.")
     data = nm.csv()
     nmapData = ""
