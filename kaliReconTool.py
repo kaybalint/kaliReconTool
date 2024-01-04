@@ -10,7 +10,7 @@ def main():
         target = sys.argv[1]
 
     print(f'Testing {target}...')
-    filename = "Scan Results for " + target + ".txt"
+    filename = "Scan_Results_" + target
     results = open(filename, 'w')
     results.write(f"Target: {target}\n")
     results.write("*"*20+"\n")
