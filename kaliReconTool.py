@@ -30,11 +30,11 @@ def main():
 
 def nmapScan(target, file):
     print("Starting Nmap scan...")
-    file.write("NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n"
+    file.write("NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
     nm = nmap.PortScanner()
     nm.scan(hosts = target, arguments = "-p- -A")
     print("Nmap scan complete.")
-    file.write("End Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+    file.write("End Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     for host in nm.all_hosts():
         file.write(f"Host: {host} ({nm[host].hostname()})\n")
         file.write(f"State: {nm[host].state()}\n----------n")
