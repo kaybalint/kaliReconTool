@@ -2,6 +2,7 @@ import sys
 import re
 import nmap
 from datetime import datetime
+import pytz
 
 def main():
     if len(sys.argv) == 1:
@@ -20,11 +21,11 @@ def main():
     else:
         filename = "Scan_Results_" + target
     results = open(filename, 'w')
-    results.write(f"Target: {target}\nStart Time: {datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+    results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     results.write("*"*20+"\n\n")
     nmap = nmapScan(target)
     addToFile("NMAP SCAN", results, nmap)
-    results.write(f"Scan complete.\nEnd Time: {datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S')}")
+    results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     results.close()
     print(f"Results are located in {filename}.")
 
