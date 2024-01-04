@@ -10,5 +10,5 @@ elif len(sys.argv) == 2:
 
 print(f'Testing {target}...')
 nm = nmap.PortScanner()
-nm.scan(host = target, arguments = "-p- -A")
+nm.scan(hosts = target, arguments = "-p- -A")
 print(nm.csv())
