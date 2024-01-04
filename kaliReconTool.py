@@ -34,12 +34,12 @@ def nmapScan(target):
     data = nm.csv()
     nmapData = ""
     for line in data.split("\n"):
-        nmapData+=line.replace(";","\t|\t")+"\n"
+        nmapData+=line.replace(";","  |  ")+"\n"
     return nmapData
     
 def addToFile(scan, file, results):
     file.write(scan+"\n\n")
-    file.write(results+"\n")
+    file.write(results+)
     file.write("*"*20+"\n")
 
 if __name__ == "__main__":
