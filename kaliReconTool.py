@@ -13,7 +13,7 @@ def main():
     invalid = True
     while invalid:
         if not (re.match(r'[a-zA-Z]*://[\w.]*', target) or re.match(r'[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}', target)):
-            target = input('Enter valid IP or URL: ')
+            target = input('Enter valid IPv4 or URL (including protocol): ')
         else:
             invalid = False
     print(f'Testing {target}...\n')
@@ -26,7 +26,9 @@ def main():
     results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     results.write("*"*20+"\n\n")
     nmapScan(target, results)
-    niktoScan(target, results)
+##    niktoScan(target, results)
+##    dirbScan(target, results)
+    sslScan(target, results)
     results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     results.close()
     print(f"Results are located in {filename}.")
@@ -70,7 +72,16 @@ def dirbScan(target, file):
     for line in nk.stdout.decode('UTF-8').split("\n"):
         file.write(line+"\n")
     print("Dirb scan complete.\n")
+    file.write("*"*20+"\n\n")
 
+def sslScan(target, file):
+    print("Starting SSL scan...")
+    file.write("SSL SCAN\n")
+    nk = subprocess.run(["sslscan", "", target], capture_output=True)
+    for line in nk.stdout.decode('UTF-8').split("\n"):
+        file.write(line+"\n")
+    print("SSL scan complete.\n")
+    file.write("*"*20+"\n\n")
 
 if __name__ == "__main__":
     main()
