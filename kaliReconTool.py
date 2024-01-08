@@ -35,7 +35,7 @@ def main():
 
 def nmapScan(target, file):
     print("Starting Nmap scan...")
-    print(f"NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
+    print(f"Start Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
     file.write(f"NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
     nm = nmap.PortScanner()
     nm.scan(hosts = target, arguments = "-p- -A")
