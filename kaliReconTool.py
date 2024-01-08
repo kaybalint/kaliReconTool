@@ -57,17 +57,19 @@ def nmapScan(target, file):
                     data = data.strip()
                     x = nm[host][protocol][port][data]
                     if x:
-                        if data == 'cpe' or data == 'script' or data == 'conf' or data == 'extrainfo':
+                        if data in ['port', 'state', 'name', 'product', 'version']:
+                            print(f"{data.capitalize()}: {x}", end='\t')
                             file.write(f"{data.capitalize()}: {x}\t")
                         else:
-                            print(f"{data.capitalize()}: {x}", end='\t')
                             file.write(f"{data.capitalize()}: {x}\t")
                     else:
                         print(f"{data.capitalize()}: N/A", end='\t')
                         file.write(f"{data.capitalize()}: N/A\t")
                 print()
                 file.write("\n")
+        print()        
         file.write("\n")
+    print("*"*20+"\n\n")    
     file.write("*"*20+"\n\n")
 
 def niktoScan(target, file):
