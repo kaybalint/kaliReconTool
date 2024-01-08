@@ -79,7 +79,7 @@ def dirbScan(target, file):
     file.write("DIRB SCAN\n")
     nk = subprocess.run(["dirb", "", target], capture_output=True)
     print("Dirb scan complete.\n")
-    for line in nk.stdout.decode('UTF-8').split("\n"):t
+    for line in nk.stdout.decode('UTF-8').split("\n"):
         print(line)
         file.write(line+"\n")
     print("*"*20+"\n\n")
