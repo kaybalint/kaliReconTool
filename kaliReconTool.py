@@ -25,7 +25,7 @@ def main():
     results = open(filename, 'w')
     results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     results.write("*"*20+"\n\n")
-    testNmap(target, results)
+    nmapScan(target, results)
     dirbScan(target, results)
     sslScan(target, results)
     niktoScan(target, results)
@@ -33,7 +33,7 @@ def main():
     results.close()
     print(f"Results are located in {filename}.")
 
-def testNmap(target,file):
+def nmapScan(target,file):
     print("Starting Nmap scan...")
     file.write("NMAP SCAN\n")
     nk = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
@@ -41,45 +41,6 @@ def testNmap(target,file):
     for line in nk.stdout.decode('UTF-8').split("\n"):
         print(line)
         file.write(line+"\n")
-    file.write("*"*20+"\n\n")
-
-def nmapScan(target, file):
-    print("Starting Nmap scan...")
-    print(f"Start Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
-    file.write(f"NMAP SCAN\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n")
-    nm = nmap.PortScanner()
-    nm.scan(hosts = target, arguments = "-p- -A")
-    print("Nmap scan complete.\n")
-    print(f"End Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-    file.write(f"End Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-    for host in nm.all_hosts():
-        print(f"Host: {host} ({nm[host].hostname()})\n")
-        file.write(f"Host: {host} ({nm[host].hostname()})\n")
-        print(f"State: {nm[host].state()}\n----------\n")
-        file.write(f"State: {nm[host].state()}\n----------\n")
-        for protocol in nm[host].all_protocols():
-            print(f"Protocol: {protocol}\n")
-            file.write(f"Protocol: {protocol}\n")
-            for port in nm[host][protocol].keys():
-                print(f"Port: {port}", end='\t')
-                file.write(f"Port: {port}\t")
-                for data in nm[host][protocol][port].keys():
-                    data = data.strip()
-                    x = nm[host][protocol][port][data]
-                    if x:
-                        if data in ['port', 'state', 'name', 'product', 'version']:
-                            print(f"{data.capitalize()}: {x}", end='\t')
-                            file.write(f"{data.capitalize()}: {x}\t")
-                        else:
-                            file.write(f"{data.capitalize()}: {x}\t")
-                    else:
-                        print(f"{data.capitalize()}: N/A", end='\t')
-                        file.write(f"{data.capitalize()}: N/A\t")
-                print()
-                file.write("\n")
-        print()        
-        file.write("\n")
-    print("*"*20+"\n\n")    
     file.write("*"*20+"\n\n")
 
 def niktoScan(target, file):
