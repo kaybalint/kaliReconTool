@@ -56,8 +56,11 @@ def nmapScan(target, file):
                 for data in nm[host][protocol][port].keys():
                     x = nm[host][protocol][port][data]
                     if x:
-                        print(f"{data.capitalize()}: {x}", end='\t')
-                        file.write(f"{data.capitalize()}: {x}\t")
+                        if x == 'cpe' or x == 'script':
+                            file.write(f"{data.capitalize()}: {x}\t")
+                        else:
+                            print(f"{data.capitalize()}: {x}", end='\t')
+                            file.write(f"{data.capitalize()}: {x}\t")
                     else:
                         print(f"{data.capitalize()}: N/A", end='\t')
                         file.write(f"{data.capitalize()}: N/A\t")
