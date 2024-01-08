@@ -36,7 +36,7 @@ def main():
 def testNmap(target,file):
     print("Starting Nmap scan...")
     file.write("NMAP SCAN\n")
-    nk = subprocess.run(["nmap", "-p- -A", target], capture_output=True)
+    nk = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
     print("Nmap scan complete.\n")
     for line in nk.stdout.decode('UTF-8').split("\n"):
         print(line)
