@@ -62,7 +62,7 @@ def nmapScan(target, file):
                         print(f"{data.capitalize()}: N/A", end='\t')
                         file.write(f"{data.capitalize()}: N/A\t")
             print()
-            file.write("\n"
+            file.write("\n")
         file.write("\n")
     file.write("*"*20+"\n\n")
 
