@@ -25,13 +25,23 @@ def main():
     results = open(filename, 'w')
     results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     results.write("*"*20+"\n\n")
-    nmapScan(target, results)
+    testNmap(target, results)
     dirbScan(target, results)
     sslScan(target, results)
     niktoScan(target, results)
     results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     results.close()
     print(f"Results are located in {filename}.")
+
+def testNmap(target,file):
+    print("Starting Nmap scan...")
+    file.write("NMAP SCAN\n")
+    nk = subprocess.run(["nmap", "-p- -A", target], capture_output=True)
+    print("Nmap scan complete.\n")
+    for line in nk.stdout.decode('UTF-8').split("\n"):
+        print(line)
+        file.write(line+"\n")
+    file.write("*"*20+"\n\n")
 
 def nmapScan(target, file):
     print("Starting Nmap scan...")
