@@ -48,20 +48,22 @@ def nmapScan(target, file):
         print(f"State: {nm[host].state()}\n----------\n")
         file.write(f"State: {nm[host].state()}\n----------\n")
         for protocol in nm[host].all_protocols():
-               print(f"Protocol: {protocol}\n")
-               file.write(f"Protocol: {protocol}\n")
-               for port in nm[host][protocol].keys():
-                   print(f"Port: {port}\t")
-                   file.write(f"Port: {port}\t")
-                   for data in nm[host][protocol][port].keys():
-                       x = nm[host][protocol][port][data]
-                       if x:
-                           print(f"{data.capitalize()}: {x}\t")
-                           file.write(f"{data.capitalize()}: {x}\t")
-                       else:
-                           print(f"{data.capitalize()}: N/A\t")
-                           file.write(f"{data.capitalize()}: N/A\t")
-                   file.write("\n\n")
+            print(f"Protocol: {protocol}\n")
+            file.write(f"Protocol: {protocol}\n")
+            for port in nm[host][protocol].keys():
+                print(f"Port: {port}", end='\t')
+                file.write(f"Port: {port}\t")
+                for data in nm[host][protocol][port].keys():
+                    x = nm[host][protocol][port][data]
+                    if x:
+                        print(f"{data.capitalize()}: {x}", end='\t')
+                        file.write(f"{data.capitalize()}: {x}\t")
+                    else:
+                        print(f"{data.capitalize()}: N/A", end='\t')
+                        file.write(f"{data.capitalize()}: N/A\t")
+            print()
+            file.write("\n"
+        file.write("\n")
     file.write("*"*20+"\n\n")
 
 def niktoScan(target, file):
