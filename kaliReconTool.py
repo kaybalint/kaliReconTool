@@ -5,6 +5,11 @@ from datetime import datetime
 import pytz
 import subprocess
 
+BLUE = "\033[94m"
+GREEN = "\033[92m"
+RED = "\033[91m"
+ENDC = "\033[0m"
+
 def main():
     if len(sys.argv) == 1:
         target = input('Enter target IP or URL: ')           
@@ -42,6 +47,7 @@ def nmapScan(target,file):
         print(line)
         file.write(line+"\n")
     file.write("*"*20+"\n\n")
+    #try print(f"{RED} Nmap scan failed. {ENDC}")
 
 def niktoScan(target, file):
     print("Starting Nikto scan...")
