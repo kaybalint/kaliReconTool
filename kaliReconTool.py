@@ -42,10 +42,10 @@ def main():
         file.write("*"*20+"\n\n")
     if re.match(r'[a-zA-Z]*://[\w.]*', target):
         domain = target.split("//")[1]
-        domain_https = target
+        domain_https = target + '/'
     else:
         domain = target
-        domain_https = 'https://'+target
+        domain_https = 'https://'+target+'/'
     nmapScan(domain)
     dirbScan(domain_https)
     sslScan(domain)
