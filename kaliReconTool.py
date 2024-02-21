@@ -59,7 +59,7 @@ def nmapScan(target,file):
                 file.write(line+"\n")
         if writeFile:
             file.write("*"*20+"\n\n")
-        print(f"{GREEN}[+]{ENDC} Nmap scan successful.")
+        print(f"{GREEN}[+]{ENDC} Nmap scan successful.\n")
     else:
         print(f"{RED}[-]{ENDC} Nmap scan failed.")
         for line in nmap.split("\n"):
@@ -77,7 +77,7 @@ def niktoScan(target, file):
                 file.write(line+"\n")
         if writeFile:
             file.write("*"*20+"\n\n")
-        print(f"{GREEN}[+]{ENDC} Nikto scan complete.\n")
+        print(f"{GREEN}[+]{ENDC} Nikto scan successful.\n")
     else:
         print(f"{RED}[-]{ENDC} Nikto scan failed.")
         for line in nikto.split("\n"):
@@ -96,7 +96,7 @@ def dirbScan(target, file):
         print("*"*20+"\n\n")
         if writeFile:
             file.write("*"*20+"\n\n")        
-        print(f"{GREEN}[+]{ENDC} Dirb scan complete.\n")
+        print(f"{GREEN}[+]{ENDC} Dirb scan successful.\n")
     else:
         print(f"{RED}[-]{ENDC} Dirb scan failed.")
         for line in dirb.split("\n"):
@@ -115,7 +115,7 @@ def sslScan(target, file):
         print("*"*20+"\n\n")
         if writeFile:
             file.write("*"*20+"\n\n")
-        print(f"{GREEN}[+]{ENDC} SSL scan complete.\n")
+        print(f"{GREEN}[+]{ENDC} SSL scan successful.\n")
     else:
         print(f"{RED}[-]{ENDC} SSL scan failed.")
         for line in ssl.split("\n"):
