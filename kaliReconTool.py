@@ -25,9 +25,9 @@ def main():
             target = input('Enter valid IPv4 or URL (including protocol): ')
         else:
             invalid = False
-    write = input('Would you like the results saved to a file? (y/n)')
+    write = input('Would you like the results saved to a file? (y/n) ')
     while write not in ('y', 'n', 'Y', 'N'):
-        write = input('Would you like the results saved to a file? (y/n)')
+        write = input('Would you like the results saved to a file? (y/n) ')
     if write.lower() == 'y':
         writeFile = True
     print(f'\nTesting {BLUE}{target}{ENDC}...\n')
