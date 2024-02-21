@@ -43,11 +43,11 @@ def nmapScan(target,file):
     file.write("NMAP SCAN\n")
     nmap = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
     if nmap:
-        print(f"{GREEN}[+]{ENDC} Nmap scan successful.")
         for line in nmap.stdout.decode('UTF-8').split("\n"):
             print(line)
             file.write(line+"\n")
         file.write("*"*20+"\n\n")
+        print(f"{GREEN}[+]{ENDC} Nmap scan successful.")
     else:
         print(f"{RED}[-]{ENDC} Nmap scan failed.")
 
@@ -56,11 +56,11 @@ def niktoScan(target, file):
     file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
     if nk:
-        print(f"{GREEN}[+]{ENDC} Nikto scan complete.\n")
         for line in nk.stdout.decode('UTF-8').split("\n"):
             print(line)
             file.write(line+"\n")
         file.write("*"*20+"\n\n")
+        print(f"{GREEN}[+]{ENDC} Nikto scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} Nikto scan failed.")
         
@@ -69,12 +69,12 @@ def dirbScan(target, file):
     file.write("DIRB SCAN\n")
     dirb = subprocess.run(["dirb", "", target], capture_output=True)
     if dirb:
-        print(f"{GREEN}[+]{ENDC} Dirb scan complete.\n")
         for line in dirb.stdout.decode('UTF-8').split("\n"):
             print(line)
             file.write(line+"\n")
         print("*"*20+"\n\n")
-        file.write("*"*20+"\n\n")
+        file.write("*"*20+"\n\n")        
+        print(f"{GREEN}[+]{ENDC} Dirb scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} Dirb scan failed.")
 
@@ -83,12 +83,12 @@ def sslScan(target, file):
     file.write("SSL SCAN\n")
     ssl = subprocess.run(["sslscan", "", target], capture_output=True)
     if ssl:
-        print(f"{GREEN}[+]{ENDC} SSL scan complete.\n")
         for line in ssl.stdout.decode('UTF-8').split("\n"):
             print(line)
             file.write(line+"\n")
         print("*"*20+"\n\n")
         file.write("*"*20+"\n\n")
+        print(f"{GREEN}[+]{ENDC} SSL scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} SSL scan failed.")
 
