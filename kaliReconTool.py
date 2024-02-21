@@ -31,9 +31,9 @@ def main():
     results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
     results.write("*"*20+"\n\n")
     nmapScan(target, results)
-    #dirbScan(target, results)
-    #sslScan(target, results)
-    #niktoScan(target, results)
+    dirbScan(target, results)
+    sslScan(target, results)
+    niktoScan(target, results)
     results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     results.close()
     print(f"Results are located in {filename}.")
@@ -51,26 +51,32 @@ def nmapScan(target,file):
         print(f"{GREEN}[+]{ENDC} Nmap scan successful.")
     else:
         print(f"{RED}[-]{ENDC} Nmap scan failed.")
+        for line in nmap.split("\n"):
+            print(line)
 
 def niktoScan(target, file):
     print("[+] Starting Nikto scan")
     file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
-    if nk:
-        for line in nk.stdout.decode('UTF-8').split("\n"):
+    nikto = nk.stdout.decode('UTF-8')
+    if '0 host(s)' not in nikto:
+        for line in nikto.split("\n"):
             print(line)
             file.write(line+"\n")
         file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nikto scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} Nikto scan failed.")
+        for line in nikto.split("\n"):
+            print(line)
         
 def dirbScan(target, file):
     print("[+] Starting Dirb scan")
     file.write("DIRB SCAN\n")
-    dirb = subprocess.run(["dirb", "", target], capture_output=True)
-    if dirb:
-        for line in dirb.stdout.decode('UTF-8').split("\n"):
+    dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
+    dirb = dirb_raw.stdout.decode('UTF-8')
+    if 'FATAL' not in dirb:
+        for line in dirb.split("\n"):
             print(line)
             file.write(line+"\n")
         print("*"*20+"\n\n")
@@ -78,13 +84,16 @@ def dirbScan(target, file):
         print(f"{GREEN}[+]{ENDC} Dirb scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} Dirb scan failed.")
+        for line in dirb.split("\n"):
+            print(line)
 
 def sslScan(target, file):
     print("[+] Starting SSL scan")
     file.write("SSL SCAN\n")
-    ssl = subprocess.run(["sslscan", "", target], capture_output=True)
-    if ssl:
-        for line in ssl.stdout.decode('UTF-8').split("\n"):
+    ssl_raw = subprocess.run(["sslscan", "", target], capture_output=True)
+    ssl = ssl_raw.stdout.decode('UTF-8')
+    if 'ERROR' not in ssl:
+        for line in ssl.split("\n"):
             print(line)
             file.write(line+"\n")
         print("*"*20+"\n\n")
@@ -92,6 +101,8 @@ def sslScan(target, file):
         print(f"{GREEN}[+]{ENDC} SSL scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} SSL scan failed.")
+        for line in ssl.split("\n"):
+            print(line)
 
 if __name__ == "__main__":
     main()
