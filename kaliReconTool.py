@@ -41,10 +41,10 @@ def main():
 def nmapScan(target,file):
     print("[+] Starting Nmap scan")
     file.write("NMAP SCAN\n")
-    nmap = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
-    print(nmap)
-    if nmap:
-        for line in nmap.stdout.decode('UTF-8').split("\n"):
+    nmap_raw = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
+    nmap = nmap_raw.stdout.decode('UTF-8')
+    if not nmap.contains('Nmap done: 0'):
+        for line in nmap.split("\n"):
             print(line)
             file.write(line+"\n")
         file.write("*"*20+"\n\n")
