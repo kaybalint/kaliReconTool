@@ -41,45 +41,56 @@ def main():
 def nmapScan(target,file):
     print("Starting Nmap scan...")
     file.write("NMAP SCAN\n")
-    nk = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
-    print("Nmap scan complete.\n")
-    for line in nk.stdout.decode('UTF-8').split("\n"):
-        print(line)
-        file.write(line+"\n")
-    file.write("*"*20+"\n\n")
-    #try print(f"{RED} Nmap scan failed. {ENDC}")
+    nmap = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
+    if nmap:
+        print(f"{GREEN} Nmap scan successful. {ENDC}")
+        for line in nmap.stdout.decode('UTF-8').split("\n"):
+            print(line)
+            file.write(line+"\n")
+        file.write("*"*20+"\n\n")
+    else:
+        print(f"{RED} Nmap scan failed. {ENDC}")
 
 def niktoScan(target, file):
     print("Starting Nikto scan...")
     file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
-    print("Nikto scan complete.\n")
-    for line in nk.stdout.decode('UTF-8').split("\n"):
-        print(line)
-        file.write(line+"\n")
-    file.write("*"*20+"\n\n")
-
+    if nk:
+        print(f"{GREEN} Nikto scan complete. {ENDC}\n")
+        for line in nk.stdout.decode('UTF-8').split("\n"):
+            print(line)
+            file.write(line+"\n")
+        file.write("*"*20+"\n\n")
+    else:
+        print(f"{RED} Nikto scan failed. {ENDC}")
+        
 def dirbScan(target, file):
     print("Starting Dirb scan...")
     file.write("DIRB SCAN\n")
-    nk = subprocess.run(["dirb", "", target], capture_output=True)
-    print("Dirb scan complete.\n")
-    for line in nk.stdout.decode('UTF-8').split("\n"):
-        print(line)
-        file.write(line+"\n")
-    print("*"*20+"\n\n")
-    file.write("*"*20+"\n\n")
+    dirb = subprocess.run(["dirb", "", target], capture_output=True)
+    if dirb:
+        print(f"{GREEN}Dirb scan complete.{ENDC}\n")
+        for line in dirb.stdout.decode('UTF-8').split("\n"):
+            print(line)
+            file.write(line+"\n")
+        print("*"*20+"\n\n")
+        file.write("*"*20+"\n\n")
+    else:
+        print(f"{RED} Dirb scan failed. {ENDC}")
 
 def sslScan(target, file):
     print("Starting SSL scan...")
     file.write("SSL SCAN\n")
-    nk = subprocess.run(["sslscan", "", target], capture_output=True)
-    print("SSL scan complete.\n")
-    for line in nk.stdout.decode('UTF-8').split("\n"):
-        print(line)
-        file.write(line+"\n")
-    print("*"*20+"\n\n")
-    file.write("*"*20+"\n\n")
+    ssl = subprocess.run(["sslscan", "", target], capture_output=True)
+    if ssl:
+        print(f"{GREEN}SSL scan complete.{ENDC}\n")
+        for line in ssl.stdout.decode('UTF-8').split("\n"):
+            print(line)
+            file.write(line+"\n")
+        print("*"*20+"\n\n")
+        file.write("*"*20+"\n\n")
+    else:
+        print(f"{RED} SSL scan failed. {ENDC}")
 
 if __name__ == "__main__":
     main()
