@@ -76,7 +76,7 @@ def nmapScan(target):
             print(line)
         print(f"{RED}[-]{ENDC} Nmap scan failed for {target}.\n")
         if writeFile:
-            file.write(f"Nmap scan failed for {target}\n*"*20+"\n\n")
+            file.write(f"Nmap scan failed for {target}\n\n"+"*"*20+"\n\n")
 
 def sslScan(target):
     global writeFile
@@ -98,7 +98,7 @@ def sslScan(target):
             print(line)
         print(f"{RED}[-]{ENDC} SSL scan failed for {target}.\n")
         if writeFile:
-            file.write(f"SSL scan failed for {target}\n*"*20+"\n\n")
+            file.write(f"SSL scan failed for {target}\n\n"+"*"*20+"\n\n")
         
 def dirbScan(target):
     global writeFile
@@ -143,7 +143,7 @@ def niktoScan(target):
             print(line)
         print(f"{RED}[-]{ENDC} Nikto scan failed for {target}.\n")
         if writeFile:
-            file.write(f"Nikto scan failed for {target}\n*"*20+"\n\n")
+            file.write(f"Nikto scan failed for {target}\n\n"+"*"*20+"\n\n")
 
 if __name__ == "__main__":
     main()
