@@ -9,7 +9,7 @@ BLUE = "\033[94m"
 GREEN = "\033[92m"
 RED = "\033[91m"
 ENDC = "\033[0m"
-writeFile = False
+WRITE = False
 
 def main():
     if len(sys.argv) == 1:
@@ -26,9 +26,9 @@ def main():
     while write not in ('y', 'n', 'Y', 'N'):
         write = input('Would you like the results saved to a file? (y/n)')
     if write.lower() == 'y':
-        writeFile = True
+        WRITE = True
     print(f'\nTesting {BLUE}{target}{ENDC}...\n')
-    if writeFile:
+    if WRITE:
         if re.match(r'[a-zA-Z]*://[\w.]*', target):
             x = target.split("//")[1]
             filename = "Scan_Results_" + x.replace('.','_').replace('/','_')
@@ -48,7 +48,7 @@ def main():
     sslScan(domain, results)
     niktoScan(domain, results)
     print(f'{GREEN}[+]{ENDC} {target} scan complete.')
-    if writeFile:
+    if WRITE:
         results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
         results.close()
         print(f"Results are located in {filename}.")
@@ -61,9 +61,9 @@ def nmapScan(target,file):
     if not 'Nmap done: 0' in nmap:
         for line in nmap.split("\n"):
             print(line)
-            if writeFile:
+            if WRITE:
                 file.write(line+"\n")
-        if writeFile:
+        if WRITE:
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nmap scan successful.\n")
     else:
@@ -79,9 +79,9 @@ def niktoScan(target, file):
     if '0 host(s)' not in nikto:
         for line in nikto.split("\n"):
             print(line)
-            if writeFile:
+            if WRITE:
                 file.write(line+"\n")
-        if writeFile:
+        if WRITE:
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nikto scan successful.\n")
     else:
@@ -97,10 +97,10 @@ def dirbScan(target, file):
     if 'FATAL' not in dirb:
         for line in dirb.split("\n"):
             print(line)
-            if writeFile:
+            if WRITE:
                 file.write(line+"\n")
         print("*"*20+"\n\n")
-        if writeFile:
+        if WRITE:
             file.write("*"*20+"\n\n")        
         print(f"{GREEN}[+]{ENDC} Dirb scan successful.\n")
     else:
@@ -116,10 +116,10 @@ def sslScan(target, file):
     if 'ERROR' not in ssl:
         for line in ssl.split("\n"):
             print(line)
-            if writeFile:
+            if WRITE:
                 file.write(line+"\n")
         print("*"*20+"\n\n")
-        if writeFile:
+        if WRITE:
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} SSL scan successful.\n")
     else:
