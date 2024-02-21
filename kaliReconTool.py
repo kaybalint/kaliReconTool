@@ -9,45 +9,56 @@ BLUE = "\033[94m"
 GREEN = "\033[92m"
 RED = "\033[91m"
 ENDC = "\033[0m"
+writeFile = False
 
 def main():
     if len(sys.argv) == 1:
-        target = input('Enter target IP or URL: ')           
+        target = input('Enter valid IPv4 or URL (including protocol): ')           
     elif len(sys.argv) == 2:
         target = sys.argv[1]
-##    invalid = True
-##    while invalid:
-##        if not (re.match(r'[a-zA-Z]*://[\w.]*', target) or re.match(r'[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}', target)):
-##            target = input('Enter valid IPv4 or URL (including protocol): ')
-##        else:
-##            invalid = False
-    print(f'Testing {BLUE}{target}{ENDC}...\n')
-    if re.match(r'[a-zA-Z]*://[\w.]*', target):
-        x = target.split("//")[1]
-        filename = "Scan_Results_" + x.replace('.','_').replace('/','_')
-    else:
-        filename = "Scan_Results_" + target.replace('.','_').replace('/','_')
-    results = open(filename, 'w')
-    results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-    results.write("*"*20+"\n\n")
+    invalid = True
+    while invalid:
+        if not (re.match(r'[a-zA-Z]*://[\w.]*', target) or re.match(r'[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}', target)):
+            target = input('Enter valid IPv4 or URL (including protocol): ')
+        else:
+            invalid = False
+    write = input('Would you like the results saved to a file? (y/n)')
+    while write not in ('y', 'n', 'Y', 'N'):
+        write = input('Would you like the results saved to a file? (y/n)')
+    if write.lower() == 'y':
+        writeFile = True
+    print(f'\nTesting {BLUE}{target}{ENDC}...\n')
+    if writeFile:
+        if re.match(r'[a-zA-Z]*://[\w.]*', target):
+            x = target.split("//")[1]
+            filename = "Scan_Results_" + x.replace('.','_').replace('/','_')
+        else:
+            filename = "Scan_Results_" + target.replace('.','_').replace('/','_')
+        results = open(filename, 'w')
+        results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+        results.write("*"*20+"\n\n")
     nmapScan(target, results)
     dirbScan(target, results)
     sslScan(target, results)
     niktoScan(target, results)
-    results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
-    results.close()
-    print(f"Results are located in {filename}.")
+    print(f'{GREEN}[+]{ENDC} {target} scan complete.')
+    if writeFile:
+        results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
+        results.close()
+        print(f"Results are located in {filename}.")
 
 def nmapScan(target,file):
     print("[+] Starting Nmap scan")
     file.write("NMAP SCAN\n")
-    nmap_raw = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
+    nmap_raw = subprocess.run(["nmap", "-A", target], capture_output=True)
     nmap = nmap_raw.stdout.decode('UTF-8')
     if not 'Nmap done: 0' in nmap:
         for line in nmap.split("\n"):
             print(line)
-            file.write(line+"\n")
-        file.write("*"*20+"\n\n")
+            if writeFile:
+                file.write(line+"\n")
+        if writeFile:
+            file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nmap scan successful.")
     else:
         print(f"{RED}[-]{ENDC} Nmap scan failed.")
@@ -62,8 +73,10 @@ def niktoScan(target, file):
     if '0 host(s)' not in nikto:
         for line in nikto.split("\n"):
             print(line)
-            file.write(line+"\n")
-        file.write("*"*20+"\n\n")
+            if writeFile:
+                file.write(line+"\n")
+        if writeFile:
+            file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nikto scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} Nikto scan failed.")
@@ -78,9 +91,11 @@ def dirbScan(target, file):
     if 'FATAL' not in dirb:
         for line in dirb.split("\n"):
             print(line)
-            file.write(line+"\n")
+            if writeFile:
+                file.write(line+"\n")
         print("*"*20+"\n\n")
-        file.write("*"*20+"\n\n")        
+        if writeFile:
+            file.write("*"*20+"\n\n")        
         print(f"{GREEN}[+]{ENDC} Dirb scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} Dirb scan failed.")
@@ -95,9 +110,11 @@ def sslScan(target, file):
     if 'ERROR' not in ssl:
         for line in ssl.split("\n"):
             print(line)
-            file.write(line+"\n")
+            if writeFile:
+                file.write(line+"\n")
         print("*"*20+"\n\n")
-        file.write("*"*20+"\n\n")
+        if writeFile:
+            file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} SSL scan complete.\n")
     else:
         print(f"{RED}[-]{ENDC} SSL scan failed.")
