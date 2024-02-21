@@ -59,7 +59,7 @@ def main():
 def nmapScan(target):
     global writeFile
     global file
-    print("{BLUE}[+]{ENDC} Starting Nmap scan")
+    print(f"{BLUE}[+]{ENDC} Starting Nmap scan")
     if writeFile: file.write("NMAP SCAN\n")
     nmap_raw = subprocess.run(["nmap", "-A", target], capture_output=True)
     nmap = nmap_raw.stdout.decode('UTF-8')
@@ -74,12 +74,12 @@ def nmapScan(target):
     else:
         for line in nmap.split("\n"):
             print(line)
-        print(f"{RED}[-]{ENDC} Nmap scan failed.")
+        print(f"{RED}[-]{ENDC} Nmap scan failed.\n")
 
 def dirbScan(target):
     global writeFile
     global file
-    print("{BLUE}[+]{ENDC} Starting Dirb scan")
+    print(f"{BLUE}[+]{ENDC} Starting Dirb scan")
     if writeFile: file.write("DIRB SCAN\n")
     dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
     dirb = dirb_raw.stdout.decode('UTF-8')
@@ -95,12 +95,12 @@ def dirbScan(target):
     else:
         for line in dirb.split("\n"):
             print(line)
-        print(f"{RED}[-]{ENDC} Dirb scan failed.")
+        print(f"{RED}[-]{ENDC} Dirb scan failed.\n")
 
 def sslScan(target):
     global writeFile
     global file
-    print("{BLUE}[+]{ENDC} Starting SSL scan")
+    print(f"{BLUE}[+]{ENDC} Starting SSL scan")
     if writeFile: file.write("SSL SCAN\n")
     ssl_raw = subprocess.run(["sslscan", "", target], capture_output=True)
     ssl = ssl_raw.stdout.decode('UTF-8')
@@ -115,12 +115,12 @@ def sslScan(target):
     else:
         for line in ssl.split("\n"):
             print(line)
-        print(f"{RED}[-]{ENDC} SSL scan failed.")
+        print(f"{RED}[-]{ENDC} SSL scan failed.\n")
 
 def niktoScan(target):
     global writeFile
     global file
-    print("{BLUE}[+]{ENDC} Starting Nikto scan")
+    print(f"{BLUE}[+]{ENDC} Starting Nikto scan")
     if writeFile: file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
     nikto = nk.stdout.decode('UTF-8')
@@ -135,7 +135,7 @@ def niktoScan(target):
     else:
         for line in nikto.split("\n"):
             print(line)
-        print(f"{RED}[-]{ENDC} Nikto scan failed.")
+        print(f"{RED}[-]{ENDC} Nikto scan failed.\n")
 
 if __name__ == "__main__":
     main()
