@@ -47,8 +47,8 @@ def main():
         domain = target
         domain_https = 'https://'+target+'/'
     nmapScan(domain)
-    dirbScan(domain_https)
     sslScan(domain)
+    dirbScan(domain_https)
     niktoScan(domain)
     print(f'{GREEN}[+]{ENDC} {target} scan complete.')
     if writeFile:
@@ -75,27 +75,8 @@ def nmapScan(target):
         for line in nmap.split("\n"):
             print(line)
         print(f"{RED}[-]{ENDC} Nmap scan failed for {target}.\n")
-
-def dirbScan(target):
-    global writeFile
-    global file
-    print(f"{BLUE}[+]{ENDC} Starting Dirb scan")
-    if writeFile: file.write("DIRB SCAN\n")
-    dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
-    dirb = dirb_raw.stdout.decode('UTF-8')
-    if 'FATAL' not in dirb:
-        for line in dirb.split("\n"):
-            print(line)
-            if writeFile:
-                file.write(line+"\n")
-        print("*"*20+"\n\n")
         if writeFile:
-            file.write("*"*20+"\n\n")        
-        print(f"{GREEN}[+]{ENDC} Dirb scan successful.\n")
-    else:
-        for line in dirb.split("\n"):
-            print(line)
-        print(f"{RED}[-]{ENDC} Dirb scan failed for {target}.\n")
+            file.write(f"Nmap scan failed for {target}\n*"*20+"\n\n")
 
 def sslScan(target):
     global writeFile
@@ -116,7 +97,32 @@ def sslScan(target):
         for line in ssl.split("\n"):
             print(line)
         print(f"{RED}[-]{ENDC} SSL scan failed for {target}.\n")
-
+        if writeFile:
+            file.write(f"SSL scan failed for {target}\n*"*20+"\n\n")
+        
+def dirbScan(target):
+    global writeFile
+    global file
+    print(f"{BLUE}[+]{ENDC} Starting Dirb scan")
+    if writeFile: file.write("DIRB SCAN\n")
+    dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
+    dirb = dirb_raw.stdout.decode('UTF-8')
+    if 'FATAL' not in dirb:
+        for line in dirb.split("\n"):
+            print(line)
+            if writeFile:
+                file.write(line+"\n")
+        print("*"*20+"\n\n")
+        if writeFile:
+            file.write("*"*20+"\n\n")        
+        print(f"{GREEN}[+]{ENDC} Dirb scan successful.\n")
+    else:
+        for line in dirb.split("\n"):
+            print(line)
+        print(f"{RED}[-]{ENDC} Dirb scan failed for {target}.\n")
+        if writeFile:
+            file.write(f"DIRB scan failed for {target}\n*"*20+"\n\n")
+        
 def niktoScan(target):
     global writeFile
     global file
@@ -136,6 +142,8 @@ def niktoScan(target):
         for line in nikto.split("\n"):
             print(line)
         print(f"{RED}[-]{ENDC} Nikto scan failed for {target}.\n")
+        if writeFile:
+            file.write(f"Nikto scan failed for {target}\n*"*20+"\n\n")
 
 if __name__ == "__main__":
     main()
