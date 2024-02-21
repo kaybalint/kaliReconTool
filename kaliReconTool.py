@@ -10,9 +10,11 @@ GREEN = "\033[92m"
 RED = "\033[91m"
 ENDC = "\033[0m"
 writeFile = False
+file = None
 
 def main():
     global writeFile
+    global file
     if len(sys.argv) == 1:
         target = input('Enter valid IPv4 or URL (including protocol): ')           
     elif len(sys.argv) == 2:
@@ -35,27 +37,28 @@ def main():
             filename = "Scan_Results_" + x.replace('.','_').replace('/','_')
         else:
             filename = "Scan_Results_" + target.replace('.','_').replace('/','_')
-        results = open(filename, 'w')
-        results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-        results.write("*"*20+"\n\n")
+        file = open(filename, 'w')
+        file.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+        file.write("*"*20+"\n\n")
     if re.match(r'[a-zA-Z]*://[\w.]*', target):
         domain = target.split("//")[1]
         domain_https = target
     else:
         domain = target
         domain_https = 'https://'+target
-    nmapScan(domain, results)
-    dirbScan(domain_https, results)
-    sslScan(domain, results)
-    niktoScan(domain, results)
+    nmapScan(domain)
+    dirbScan(domain_https)
+    sslScan(domain)
+    niktoScan(domain)
     print(f'{GREEN}[+]{ENDC} {target} scan complete.')
     if writeFile:
-        results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
-        results.close()
+        file.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
+        file.close()
         print(f"Results are located in {filename}.")
 
-def nmapScan(target,file):
+def nmapScan(target):
     global writeFile
+    global file
     print("[+] Starting Nmap scan")
     file.write("NMAP SCAN\n")
     nmap_raw = subprocess.run(["nmap", "-A", target], capture_output=True)
@@ -73,8 +76,9 @@ def nmapScan(target,file):
         for line in nmap.split("\n"):
             print(line)
 
-def niktoScan(target, file):
+def niktoScan(target):
     global writeFile
+    global file
     print("[+] Starting Nikto scan")
     file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
@@ -92,8 +96,9 @@ def niktoScan(target, file):
         for line in nikto.split("\n"):
             print(line)
         
-def dirbScan(target, file):
+def dirbScan(target):
     global writeFile
+    global file
     print("[+] Starting Dirb scan")
     file.write("DIRB SCAN\n")
     dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
@@ -112,8 +117,9 @@ def dirbScan(target, file):
         for line in dirb.split("\n"):
             print(line)
 
-def sslScan(target, file):
+def sslScan(target):
     global writeFile
+    global file
     print("[+] Starting SSL scan")
     file.write("SSL SCAN\n")
     ssl_raw = subprocess.run(["sslscan", "", target], capture_output=True)
