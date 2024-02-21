@@ -16,13 +16,13 @@ def main():
     global writeFile
     global file
     if len(sys.argv) == 1:
-        target = input('Enter valid IPv4 or URL (including protocol): ')           
+        target = input('Enter valid IPv4 or URL (including protocol): ').strip()           
     elif len(sys.argv) == 2:
-        target = sys.argv[1]
+        target = sys.argv[1].strip()
     invalid = True
     while invalid:
         if not (re.match(r'[a-zA-Z]*://[\w.]*', target) or re.match(r'[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}', target)):
-            target = input('Enter valid IPv4 or URL (including protocol): ')
+            target = input('Enter valid IPv4 or URL (including protocol): ').strip()
         else:
             invalid = False
     write = input('Would you like the results saved to a file? (y/n) ')
