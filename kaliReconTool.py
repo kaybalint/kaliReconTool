@@ -60,7 +60,7 @@ def nmapScan(target):
     global writeFile
     global file
     print("[+] Starting Nmap scan")
-    file.write("NMAP SCAN\n")
+    if writeFile: file.write("NMAP SCAN\n")
     nmap_raw = subprocess.run(["nmap", "-A", target], capture_output=True)
     nmap = nmap_raw.stdout.decode('UTF-8')
     if not 'Nmap done: 0' in nmap:
@@ -80,7 +80,7 @@ def niktoScan(target):
     global writeFile
     global file
     print("[+] Starting Nikto scan")
-    file.write("NIKTO SCAN\n")
+    if writeFile: file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
     nikto = nk.stdout.decode('UTF-8')
     if '0 host(s)' not in nikto:
@@ -100,7 +100,7 @@ def dirbScan(target):
     global writeFile
     global file
     print("[+] Starting Dirb scan")
-    file.write("DIRB SCAN\n")
+    if writeFile: file.write("DIRB SCAN\n")
     dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
     dirb = dirb_raw.stdout.decode('UTF-8')
     if 'FATAL' not in dirb:
@@ -121,7 +121,7 @@ def sslScan(target):
     global writeFile
     global file
     print("[+] Starting SSL scan")
-    file.write("SSL SCAN\n")
+    if writeFile: file.write("SSL SCAN\n")
     ssl_raw = subprocess.run(["sslscan", "", target], capture_output=True)
     ssl = ssl_raw.stdout.decode('UTF-8')
     if 'ERROR' not in ssl:
