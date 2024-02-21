@@ -43,7 +43,7 @@ def nmapScan(target,file):
     file.write("NMAP SCAN\n")
     nmap_raw = subprocess.run(["nmap", "-p-", "-A", target], capture_output=True)
     nmap = nmap_raw.stdout.decode('UTF-8')
-    if not nmap.contains('Nmap done: 0'):
+    if not 'Nmap done: 0' in nmap:
         for line in nmap.split("\n"):
             print(line)
             file.write(line+"\n")
