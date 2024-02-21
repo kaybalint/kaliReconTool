@@ -9,9 +9,10 @@ BLUE = "\033[94m"
 GREEN = "\033[92m"
 RED = "\033[91m"
 ENDC = "\033[0m"
-WRITE = False
+writeFile = False
 
 def main():
+    global writeFile
     if len(sys.argv) == 1:
         target = input('Enter valid IPv4 or URL (including protocol): ')           
     elif len(sys.argv) == 2:
@@ -26,9 +27,9 @@ def main():
     while write not in ('y', 'n', 'Y', 'N'):
         write = input('Would you like the results saved to a file? (y/n)')
     if write.lower() == 'y':
-        WRITE = True
+        writeFile = True
     print(f'\nTesting {BLUE}{target}{ENDC}...\n')
-    if WRITE:
+    if writeFile:
         if re.match(r'[a-zA-Z]*://[\w.]*', target):
             x = target.split("//")[1]
             filename = "Scan_Results_" + x.replace('.','_').replace('/','_')
@@ -48,12 +49,13 @@ def main():
     sslScan(domain, results)
     niktoScan(domain, results)
     print(f'{GREEN}[+]{ENDC} {target} scan complete.')
-    if WRITE:
+    if writeFile:
         results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
         results.close()
         print(f"Results are located in {filename}.")
 
 def nmapScan(target,file):
+    global writeFile
     print("[+] Starting Nmap scan")
     file.write("NMAP SCAN\n")
     nmap_raw = subprocess.run(["nmap", "-A", target], capture_output=True)
@@ -61,9 +63,9 @@ def nmapScan(target,file):
     if not 'Nmap done: 0' in nmap:
         for line in nmap.split("\n"):
             print(line)
-            if WRITE:
+            if writeFile:
                 file.write(line+"\n")
-        if WRITE:
+        if writeFile:
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nmap scan successful.\n")
     else:
@@ -72,6 +74,7 @@ def nmapScan(target,file):
             print(line)
 
 def niktoScan(target, file):
+    global writeFile
     print("[+] Starting Nikto scan")
     file.write("NIKTO SCAN\n")
     nk = subprocess.run(["nikto", "-h", target], capture_output=True)
@@ -79,9 +82,9 @@ def niktoScan(target, file):
     if '0 host(s)' not in nikto:
         for line in nikto.split("\n"):
             print(line)
-            if WRITE:
+            if writeFile:
                 file.write(line+"\n")
-        if WRITE:
+        if writeFile:
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nikto scan successful.\n")
     else:
@@ -90,6 +93,7 @@ def niktoScan(target, file):
             print(line)
         
 def dirbScan(target, file):
+    global writeFile
     print("[+] Starting Dirb scan")
     file.write("DIRB SCAN\n")
     dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
@@ -97,10 +101,10 @@ def dirbScan(target, file):
     if 'FATAL' not in dirb:
         for line in dirb.split("\n"):
             print(line)
-            if WRITE:
+            if writeFile:
                 file.write(line+"\n")
         print("*"*20+"\n\n")
-        if WRITE:
+        if writeFile:
             file.write("*"*20+"\n\n")        
         print(f"{GREEN}[+]{ENDC} Dirb scan successful.\n")
     else:
@@ -109,6 +113,7 @@ def dirbScan(target, file):
             print(line)
 
 def sslScan(target, file):
+    global writeFile
     print("[+] Starting SSL scan")
     file.write("SSL SCAN\n")
     ssl_raw = subprocess.run(["sslscan", "", target], capture_output=True)
@@ -116,10 +121,10 @@ def sslScan(target, file):
     if 'ERROR' not in ssl:
         for line in ssl.split("\n"):
             print(line)
-            if WRITE:
+            if writeFile:
                 file.write(line+"\n")
         print("*"*20+"\n\n")
-        if WRITE:
+        if writeFile:
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} SSL scan successful.\n")
     else:
