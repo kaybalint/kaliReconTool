@@ -121,7 +121,7 @@ def dirbScan(target):
             print(line)
         print(f"{RED}[-]{ENDC} Dirb scan failed for {target}.\n")
         if writeFile:
-            file.write(f"DIRB scan failed for {target}\n*"*20+"\n\n")
+            file.write(f"DIRB scan failed for {target}\n\n"+"*"*20+"\n\n")
         
 def niktoScan(target):
     global writeFile
