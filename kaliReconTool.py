@@ -37,10 +37,16 @@ def main():
         results = open(filename, 'w')
         results.write(f"Target: {target}\nStart Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}\n\n")
         results.write("*"*20+"\n\n")
-    nmapScan(target, results)
-    dirbScan(target, results)
-    sslScan(target, results)
-    niktoScan(target, results)
+    if re.match(r'[a-zA-Z]*://[\w.]*', target):
+        domain = target.split("//")[1]
+        domain_https = target
+    else:
+        domain = target
+        domain_https = 'https://'+target
+    nmapScan(domain, results)
+    dirbScan(domain_https, results)
+    sslScan(domain, results)
+    niktoScan(domain, results)
     print(f'{GREEN}[+]{ENDC} {target} scan complete.')
     if writeFile:
         results.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
