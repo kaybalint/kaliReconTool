@@ -59,7 +59,7 @@ def main():
 def nmapScan(target):
     global writeFile
     global file
-    print("[+] Starting Nmap scan")
+    print("{BLUE}[+]{ENDC} Starting Nmap scan")
     if writeFile: file.write("NMAP SCAN\n")
     nmap_raw = subprocess.run(["nmap", "-A", target], capture_output=True)
     nmap = nmap_raw.stdout.decode('UTF-8')
@@ -72,34 +72,14 @@ def nmapScan(target):
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} Nmap scan successful.\n")
     else:
-        print(f"{RED}[-]{ENDC} Nmap scan failed.")
         for line in nmap.split("\n"):
             print(line)
+        print(f"{RED}[-]{ENDC} Nmap scan failed.")
 
-def niktoScan(target):
-    global writeFile
-    global file
-    print("[+] Starting Nikto scan")
-    if writeFile: file.write("NIKTO SCAN\n")
-    nk = subprocess.run(["nikto", "-h", target], capture_output=True)
-    nikto = nk.stdout.decode('UTF-8')
-    if '0 host(s)' not in nikto:
-        for line in nikto.split("\n"):
-            print(line)
-            if writeFile:
-                file.write(line+"\n")
-        if writeFile:
-            file.write("*"*20+"\n\n")
-        print(f"{GREEN}[+]{ENDC} Nikto scan successful.\n")
-    else:
-        print(f"{RED}[-]{ENDC} Nikto scan failed.")
-        for line in nikto.split("\n"):
-            print(line)
-        
 def dirbScan(target):
     global writeFile
     global file
-    print("[+] Starting Dirb scan")
+    print("{BLUE}[+]{ENDC} Starting Dirb scan")
     if writeFile: file.write("DIRB SCAN\n")
     dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
     dirb = dirb_raw.stdout.decode('UTF-8')
@@ -113,14 +93,14 @@ def dirbScan(target):
             file.write("*"*20+"\n\n")        
         print(f"{GREEN}[+]{ENDC} Dirb scan successful.\n")
     else:
-        print(f"{RED}[-]{ENDC} Dirb scan failed.")
         for line in dirb.split("\n"):
             print(line)
+        print(f"{RED}[-]{ENDC} Dirb scan failed.")
 
 def sslScan(target):
     global writeFile
     global file
-    print("[+] Starting SSL scan")
+    print("{BLUE}[+]{ENDC} Starting SSL scan")
     if writeFile: file.write("SSL SCAN\n")
     ssl_raw = subprocess.run(["sslscan", "", target], capture_output=True)
     ssl = ssl_raw.stdout.decode('UTF-8')
@@ -129,14 +109,33 @@ def sslScan(target):
             print(line)
             if writeFile:
                 file.write(line+"\n")
-        print("*"*20+"\n\n")
         if writeFile:
             file.write("*"*20+"\n\n")
         print(f"{GREEN}[+]{ENDC} SSL scan successful.\n")
     else:
-        print(f"{RED}[-]{ENDC} SSL scan failed.")
         for line in ssl.split("\n"):
             print(line)
+        print(f"{RED}[-]{ENDC} SSL scan failed.")
+
+def niktoScan(target):
+    global writeFile
+    global file
+    print("{BLUE}[+]{ENDC} Starting Nikto scan")
+    if writeFile: file.write("NIKTO SCAN\n")
+    nk = subprocess.run(["nikto", "-h", target], capture_output=True)
+    nikto = nk.stdout.decode('UTF-8')
+    if '0 host(s)' not in nikto:
+        for line in nikto.split("\n"):
+            print(line)
+            if writeFile:
+                file.write(line+"\n")
+        if writeFile:
+            file.write("*"*20+"\n\n")
+        print(f"{GREEN}[+]{ENDC} Nikto scan successful.\n")
+    else:
+        for line in nikto.split("\n"):
+            print(line)
+        print(f"{RED}[-]{ENDC} Nikto scan failed.")
 
 if __name__ == "__main__":
     main()
