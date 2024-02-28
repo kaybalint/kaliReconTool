@@ -19,7 +19,7 @@ def main():
     island = open('island.txt').read()
     print(island)
     ascii_banner = pyfiglet.figlet_format("kali recon tool")
-    print('\t'+ascii_banner)
+    print(ascii_banner)
     if len(sys.argv) == 1:
         target = input('Enter valid IPv4 or URL (including protocol): ').strip()           
     elif len(sys.argv) == 2:
