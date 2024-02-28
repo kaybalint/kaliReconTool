@@ -16,6 +16,8 @@ file = None
 def main():
     global writeFile
     global file
+    island = open('island.txt').read()
+    print(island)
     ascii_banner = pyfiglet.figlet_format("kali recon tool")
     print(ascii_banner)
     if len(sys.argv) == 1:
