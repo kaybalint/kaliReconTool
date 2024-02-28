@@ -4,6 +4,7 @@ import nmap
 from datetime import datetime
 import pytz
 import subprocess
+import pyfiglet
 
 BLUE = "\033[94m"
 GREEN = "\033[92m"
@@ -15,6 +16,8 @@ file = None
 def main():
     global writeFile
     global file
+    ascii_banner = pyfiglet.figlet_format("kali recon tool")
+    print(ascii_banner)
     if len(sys.argv) == 1:
         target = input('Enter valid IPv4 or URL (including protocol): ').strip()           
     elif len(sys.argv) == 2:
