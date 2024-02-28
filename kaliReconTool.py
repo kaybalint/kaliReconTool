@@ -110,7 +110,7 @@ def dirbScan(target):
     global file
     print(f"{BLUE}[+]{ENDC} Starting Dirb scan")
     if writeFile: file.write("DIRB SCAN\n")
-    dirb_raw = subprocess.run(["dirb", "", target], capture_output=True)
+    dirb_raw = subprocess.run(["dirb", target, "-f"], capture_output=True)
     dirb = dirb_raw.stdout.decode('UTF-8')
     if 'FATAL' not in dirb:
         for line in dirb.split("\n"):
