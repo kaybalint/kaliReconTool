@@ -65,7 +65,7 @@ The repository must also contain the `island.txt` file because the script reads 
 Clone the repository:
 
 ```bash
-git clone https://github.com/USERNAME/kali-recon-tool.git
+git clone https://github.com/kaybalint/kali-recon-tool.git
 cd kali-recon-tool
 ```
 
@@ -234,7 +234,7 @@ Reconnaissance frequently requires running the same tools and reviewing separate
 Potential future improvements include:
 
 * Add `argparse` command-line options
-* Allow users to select which scans to run
+* Allow s to select which scans to run
 * Support configurable HTTP and HTTPS protocols
 * Add custom ports and Nmap profiles
 * Validate domains and IPv4 addresses more strictly
