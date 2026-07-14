@@ -1,6 +1,5 @@
 import sys
 import re
-import nmap
 from datetime import datetime
 import pytz
 import subprocess
@@ -88,7 +87,7 @@ def sslScan(target):
     global file
     print(f"{BLUE}[+]{ENDC} Starting SSL scan")
     if writeFile: file.write("SSL SCAN\n")
-    ssl_raw = subprocess.run(["sslscan", "", target], capture_output=True)
+    ssl_raw = subprocess.run(["sslscan", target], capture_output=True, text=True)
     ssl = ssl_raw.stdout.decode('UTF-8')
     if 'ERROR' not in ssl:
         for line in ssl.split("\n"):
