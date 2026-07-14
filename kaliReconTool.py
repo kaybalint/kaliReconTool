@@ -50,10 +50,26 @@ def main():
     else:
         domain = target
         domain_https = 'https://'+target+'/'
-    nmapScan(domain)
-    sslScan(domain)
-    dirbScan(domain_https)
-    niktoScan(domain)
+    try: 
+        nmapScan(domain)
+    except:
+        print("Nmap scan failed.")
+        file.write(f"Nmap scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
+    try:
+        sslScan(domain)
+    except:
+        print("SSL scan failed.")
+        file.write(f"SSL scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
+    try:
+        dirbScan(domain_https)
+    except:
+        print("Dirb scan failed.")
+        file.write(f"Dirb scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
+    try:
+        niktoScan(domain)
+    except:
+        print("Nikto scan failed.")
+        file.write(f"Nikto scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     print(f'{GREEN}[+]{ENDC} {target} scan complete.')
     if writeFile:
         file.write(f"Scan complete.\nEnd Time: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
