@@ -96,13 +96,13 @@ nikto -Version
 ### Provide the target as an argument
 
 ```bash
-python3 recon.py 192.168.1.10
+python3 kaliReconTool.py 192.168.1.10
 ```
 
 For a web target:
 
 ```bash
-python3 recon.py https://example.com
+python3 kaliReconTool.py https://example.com
 ```
 
 URLs should include the protocol:
@@ -116,7 +116,7 @@ https://example.com
 Run the script without an argument:
 
 ```bash
-python3 recon.py
+python3 kaliReconTool.py
 ```
 
 The program will prompt you to enter an IPv4 address or URL.
