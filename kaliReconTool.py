@@ -53,22 +53,22 @@ def main():
     try: 
         nmapScan(domain)
     except:
-        print("Nmap scan failed.")
+        print(f"{RED}[-]{ENDC}Nmap scan failed.\n")
         file.write(f"Nmap scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     try:
         sslScan(domain)
     except:
-        print("SSL scan failed.")
+        print(f"{RED}[-]{ENDC} SSL scan failed.\n")
         file.write(f"SSL scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     try:
         dirbScan(domain_https)
     except:
-        print("Dirb scan failed.")
+        print(f"{RED}[-]{ENDC}Dirb scan failed.\n")
         file.write(f"Dirb scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     try:
         niktoScan(domain)
     except:
-        print("Nikto scan failed.")
+        print(f"{RED}[-]{ENDC} Nikto scan failed.\n")
         file.write(f"Nikto scan failed at: {datetime.now(pytz.timezone('America/New_York')).strftime('%Y-%m-%d %H:%M:%S')}")
     print(f'{GREEN}[+]{ENDC} {target} scan complete.')
     if writeFile:
