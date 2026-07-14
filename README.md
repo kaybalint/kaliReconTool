@@ -65,8 +65,8 @@ The repository must also contain the `island.txt` file because the script reads 
 Clone the repository:
 
 ```bash
-git clone https://github.com/kaybalint/kali-recon-tool.git
-cd kali-recon-tool
+git clone https://github.com/kaybalint/kaliReconTool.git
+cd kaliReconTool
 ```
 
 Install the Python dependencies:
