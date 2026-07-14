@@ -58,7 +58,7 @@ Install the Python dependencies with:
 python3 -m pip install pytz pyfiglet
 ```
 
-The repository must also contain an `island.txt` file because the script reads and displays it when starting.
+The repository must also contain the `island.txt` file because the script reads and displays it when starting.
 
 ## Installation
 
